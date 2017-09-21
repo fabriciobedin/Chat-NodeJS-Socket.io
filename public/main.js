@@ -28,9 +28,9 @@ $(function() {
   function addParticipantsMessage (data) {
     var message = '';
     if (data.numUsers === 1) {
-      message += "there's 1 participant";
+      message += "Há uma pessoa conectada!";
     } else {
-      message += "there are " + data.numUsers + " participants";
+      message += "Há " + data.numUsers + " pessoas conectadas!";
     }
     log(message);
   }
@@ -102,7 +102,7 @@ $(function() {
   // Adds the visual chat typing message
   function addChatTyping (data) {
     data.typing = true;
-    data.message = 'is typing';
+    data.message = 'está digitando...';
     addChatMessage(data);
   }
 
@@ -229,7 +229,7 @@ $(function() {
   socket.on('login', function (data) {
     connected = true;
     // Display the welcome message
-    var message = "Welcome to Socket.IO Chat – ";
+    var message = "Bem-vindo ao Chat :)";
     log(message, {
       prepend: true
     });
@@ -243,13 +243,13 @@ $(function() {
 
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', function (data) {
-    log(data.username + ' joined');
+    log(data.username + ' entrou! :)');
     addParticipantsMessage(data);
   });
 
   // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', function (data) {
-    log(data.username + ' left');
+    log(data.username + ' saíu! :(');
     addParticipantsMessage(data);
     removeChatTyping(data);
   });
@@ -265,18 +265,18 @@ $(function() {
   });
 
   socket.on('disconnect', function () {
-    log('you have been disconnected');
+    log('Você se desconectou!');
   });
 
   socket.on('reconnect', function () {
-    log('you have been reconnected');
+    log('Você está conectado!');
     if (username) {
       socket.emit('add user', username);
     }
   });
 
   socket.on('reconnect_error', function () {
-    log('attempt to reconnect has failed');
+    log('Erro ao tentar reconectar, verifique se você está conectado à internet!');
   });
 
 });
